@@ -8,22 +8,8 @@ var PORT = process.env.PORT || 3000;
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
-var reservation = [
-    {
-        name: "Andrew Mulvaney",
-        phoneNumber: "555-555-5555",
-        email: "AJLDKJFSD@Gmail.com",
-        uniqueID: "3123"
-    }
-];
-var waitlist = [
-    {
-        name: "Superman",
-        phoneNumber: "555-555-5555",
-        email: "AJLDKJFSD@Gmail.com",
-        uniqueID: "4121"
-    }
-];
+var reservation = [];
+var waitlist = [];
 
 app.get("/", function(request, response) {
     response.sendFile(path.join(__dirname, "home.html"));
