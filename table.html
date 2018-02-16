@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <!-- Font Awesom -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+      
+    
+  <!-- Begin of container -->
+  <div class = "container">
+
+    <!-- Jumbotron area -->
+    <div class="jumbotron" style="text-align: center">
+      <h1 class="display-1">
+        <span class = "fas fa-fire"></span>
+      HOT RESTAURANT!
+    </h1>
+      <hr class="my-1">
+      <p>Current Reservations and Waiting Lists</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" href="reservation" role="button">Make a Reservation</a>
+        <a class="btn btn-primary btn-lg" href="/" role="button"><i class="fas fa-home"></i></a>
+      </p>
+    </div>
+    <!-- End of Jumbotron -->
+
+    <!-- Current Reservation Panel -->
+    <div class = "row">
+      <div class = "col-lg-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Current Reservations:</h3>
+          </div>
+          <div class="panel-body" id="tableSection">
+        </div>
+
+        <!-- Waiting List Panel -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Waiting List:</h3>
+          </div>
+          <div class="panel-body" id="waitlistSection">
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- End of  row with Current Reservation and Waiting List-->
+
+<!-- Break to give space -->
+<br>
+
+<!-- footer section -->
+  <footer class = "footer">
+    <div>
+      <p>
+        <a href="/api/tables">API Table Link</a>
+        " | "
+        <a href="/api/waitlist">API Table Link</a>
+        " | "
+        <a href="https://github.com/BradleyLawson/Hot-Restaurant">Github Repo</a>
+        " | "
+      </p>
+    </div>
+  </footer>
+  <!-- End of footer Section -->
+
+<!-- End of Container -->
+</div>
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script>
+    var currentUrl =  window.location.origin;
+  
+    $.ajax({ url: currentUrl + "/api/reservation", method: "GET"})
+    .done(function(tableData){
+      console.log(tableData);
+
+      if (tableData) {
+        for (i = 0; i < tableData.length; i++) {
+          var position = i + 1;
+          $('<div/>', {
+            id: "customer" + i
+          }).appendTo('#tableSection');
+      
+          $('#customer' + i).html("<h4>" + position + " | " + tableData[i].uniqueID + "</h4>");
+        }
+      }
+    });
+
+    $.get("/api/waitlist", function(data){
+      if (data) {
+        for (i = 0; i < data.length; i++) {
+          var position = i + 1;
+          $('<div/>', {
+            id: "waitlist" + i
+          }).appendTo('#waitlistSection');
+      
+          $('#waitlist' + i).html("<h4>" + position + " | " + data[i].uniqueID + "</h4>");
+        }
+      }
+    })
+    </script>
+ 
+ 
+  </body>
+
+</html>
